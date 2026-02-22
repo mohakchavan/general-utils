@@ -27,7 +27,8 @@ jobs:
           cat ~/.m2/settings.xml
 
       - name: Build
-        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{github.token}}
         run: |
           ls -als
           chmod +x mvnw
