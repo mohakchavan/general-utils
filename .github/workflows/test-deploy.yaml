@@ -7,6 +7,8 @@ jobs:
 
   test-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     steps:
 
       - name: Checkout
@@ -27,5 +29,5 @@ jobs:
         run: |
           ls -als
           chmod +x mvnw
-          ./mvnw clean verify
+          ./mvnw clean deploy
 
