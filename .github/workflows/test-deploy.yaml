@@ -27,5 +27,5 @@ jobs:
         run: |
           ls -als
           chmod +x mvnw
-          ./mvnw clean deploy
+          ./mvnw clean verify
 
