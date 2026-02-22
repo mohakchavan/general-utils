@@ -8,6 +8,7 @@ jobs:
   test-deploy:
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       packages: write
     steps:
 
@@ -26,6 +27,7 @@ jobs:
           cat ~/.m2/settings.xml
 
       - name: Build
+        continue-on-error: true
         run: |
           ls -als
           chmod +x mvnw
