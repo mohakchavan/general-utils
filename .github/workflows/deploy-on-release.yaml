@@ -11,6 +11,8 @@ jobs:
 
   build-jar:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
 
       - name: Checkout
@@ -41,9 +43,11 @@ jobs:
             echo "Release ID: ${{github.event.release.id}}"
             echo "Release Assets URL: ${{github.event.release.assets_url}}"
             
+            echo "=======Calling Release Info======="
             curl --location "https://api.github.com/repos/${{github.repository}}/releases/${{github.event.release.id}}"\
               --verbose --output resp.txt
             
+            echo "=======Uploading Asset======="
             jq -r ".upload_url" resp.txt | { read url; echo "${url%\{*}"; } | \
               { read cleanUrl; curl --location --header "Authorization: Bearer $GITHUB_TOKEN" --header "Content-Type: text/plain" \
                 "$cleanUrl?name=resp.txt" --data-binary "@resp.txt" --verbose; }
