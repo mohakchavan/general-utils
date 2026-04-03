@@ -24,6 +24,7 @@ jobs:
           cache: "maven"
 
       - name: Build
+        if: false
         run: |
           chmod +x mvnw
           ./mvnw clean package -P prod
@@ -39,5 +40,10 @@ jobs:
             echo "Release Action: ${{github.event.action}}"
             echo "Release ID: ${{github.event.release.id}}"
             echo "Release Assets URL: ${{github.event.release.assets_url}}"
+            
+            curl --location "https://api.github.com/repos/${{github.repository}}/releases/${{github.event.release.id}}" --verbose --output resp.txt
+            jsonResp=${{fromJSON(cat resp.txt)}}
+            echo "$jsonResp.upload_url"
+            
           fi
           
