@@ -46,9 +46,10 @@ jobs:
             cleanUrl=$(jq -r ".upload_url" resp.txt | { read url; echo "${url%\{*}"; })
             echo "=======Uploading JAR Asset======="
             for file in ./target/*.jar; do
+              echo
               echo "For $file ..."
               curl --location --request POST --header "Authorization: Bearer ${{github.token}}" \
-                --header "Content-Type: application/java-archive" "$cleanUrl?name=$file" \
+                --header "Content-Type: application/java-archive" "$cleanUrl?name=${file##*/}" \
                   --data-binary "@$file" --verbose
             done
             
