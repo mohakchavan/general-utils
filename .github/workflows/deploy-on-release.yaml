@@ -35,6 +35,7 @@ jobs:
         run: |
           if [[ "${{github.event_name}}" == "workflow_dispatch_2" ]]; then
             echo "Workflow is run manually. No need to upload release assests."
+          
           elif [[ "${{github.event_name}}" == "workflow_dispatch" ]]; then
             echo "Workflow run on release event. Upload to release assets."
             
@@ -42,9 +43,13 @@ jobs:
             curl --location --request GET "https://api.github.com/repos/${{github.repository}}/releases/305133412"\
               --verbose --output resp.txt
             
+            cleanUrl=$(jq -r ".upload_url" resp.txt | { read url; echo "${url%\{*}"; })
             echo "=======Uploading JAR Asset======="
-            for file in ./target/*.jar do
-              echo " $file ..."
+            for file in ./target/*.jar; do
+              echo "For $file ..."
+              curl --location --request POST --header "Authorization: Bearer ${{github.token}}" \
+                --header "Content-Type: application/java-archive" "$cleanUrl?name=$file" \
+                  --data-binary "@$file" --verbose
             done
             
           fi
