@@ -34,16 +34,13 @@ jobs:
       - name: Upload
         run: |
           ls -als ./target
-          if [[ "${{github.event_name}}" == "workflow_dispatch" ]]; then
+          if [[ "${{github.event_name}}" == "workflow_dispatch_2" ]]; then
             echo "Workflow is run manually. No need to upload release assests."
-          
-          elif [[ "${{github.event_name}}" == "release" ]]; then
+          elif [[ "${{github.event_name}}" == "workflow_dispatch" ]]; then
             echo "Workflow run on release event. Upload to release assets."
-            echo "Release Action: ${{github.event.action}}"
-            echo "Release ID: ${{github.event.release.id}}"
             
             echo "=======Calling Release Info======="
-            curl --location --request GET "https://api.github.com/repos/${{github.repository}}/releases/${{github.event.release.id}}"\
+            curl --location --request GET "https://api.github.com/repos/${{github.repository}}/releases/305133412"\
               --verbose --output resp.txt
             
             cleanUrl=$(jq -r ".upload_url" resp.txt | { read url; echo "${url%\{*}"; })
