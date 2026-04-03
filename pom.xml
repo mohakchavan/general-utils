@@ -85,6 +85,9 @@
             <id>release</id>
             <properties>
                 <activeProfile>release</activeProfile>
+                <logging.defaultLogLevel>debug</logging.defaultLogLevel>
+                <logging.fileLogging.enabled>true</logging.fileLogging.enabled>
+                <logging.fileLogging.file>./${project.name}-logs.txt</logging.fileLogging.file>
             </properties>
             <build>
                 <plugins>
@@ -172,6 +175,7 @@
                                 <filter>
                                     <artifact>*:*</artifact>
                                     <excludes>
+                                        <exclude>module-info.class</exclude>
                                         <exclude>META-INF/*.MF</exclude>
                                     </excludes>
                                 </filter>
