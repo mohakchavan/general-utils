@@ -31,6 +31,6 @@ jobs:
         run: |
           ls -als target
           echo "Event"
-          echo "${{github.event}}"
+          echo "${{toJSON(github.event)}}"
           echo "Event Name"
           echo "${{github.event_name}}"
