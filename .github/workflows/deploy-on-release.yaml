@@ -28,7 +28,7 @@ jobs:
       - name: Build
         run: |
           chmod +x mvnw
-          ./mvnw clean package -P prod
+          ./mvnw clean package -P prod,!dev
           ls -als
 
       - name: Upload
