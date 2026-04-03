@@ -43,7 +43,10 @@ jobs:
             
             curl --location "https://api.github.com/repos/${{github.repository}}/releases/${{github.event.release.id}}"\
               --verbose --output resp.txt
-            cat resp.txt
+            
+            jq -r ".upload_url" resp.txt | { read url; echo "${url%\{*}"; } | \
+              { read cleanUrl; curl --location --header "Authorization: Bearer $GITHUB_TOKEN" --header "Content-Type: text/plain" \
+                "$cleanUrl?name=resp.txt" --data-binary "@resp.txt" --verbose; }
             
           fi
           
