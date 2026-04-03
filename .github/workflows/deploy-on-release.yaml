@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
   release:
     types:
+      - edited
       - published
 
 jobs:
@@ -29,8 +30,14 @@ jobs:
 
       - name: Upload
         run: |
-          ls -als target
-          echo "Event"
-          echo "${{toJSON(github.event)}}"
           echo "Event Name"
           echo "${{github.event_name}}"
+          if [[ "${{github.event_name}}" == "workflow_dispatch" ]]; then
+            echo "Workflow is run manually. No need to upload release assests."
+          elif [[ "${{github.event_name}}" == "release" ]]; then
+            echo "Workflow run on release event. Upload to release assets."
+            echo "Release Action: ${{release.action}}"
+            echo "Release Action: ${{github.release.action}}"
+            echo "Release ID:"
+          fi
+          
