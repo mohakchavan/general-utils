@@ -33,7 +33,6 @@ jobs:
 
       - name: Upload
         run: |
-          ls -als ./target
           if [[ "${{github.event_name}}" == "workflow_dispatch_2" ]]; then
             echo "Workflow is run manually. No need to upload release assests."
           elif [[ "${{github.event_name}}" == "workflow_dispatch" ]]; then
@@ -47,9 +46,6 @@ jobs:
             echo "=======Uploading JAR Asset======="
             for file in ./target/*.jar do
               echo "For $file ..."
-              curl --location --request POST --header "Authorization: Bearer ${{github.token}}" \
-                --header "Content-Type: application/java-archive" "$cleanUrl?name=$file" \
-                  --data-binary "@$file" --verbose
             done
             
           fi
