@@ -1,0 +1,36 @@
+name: Generate JAR on Release
+run-name: Generating JAR for ${{github.sha}} commit id.
+
+on:
+  workflow_dispatch:
+  release:
+    types:
+      - published
+  push:
+    branches:
+      - "development_deploy"
+
+jobs:
+
+  build-jar:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          java-version: 21
+          distribution: "temurin"
+          cache: "maven"
+
+      - name: Build
+        run: |
+          chmod +x mvnw
+          ./mvnw clean package -P prod
+
+      - name: Upload
+        run: |
+          ls -als target
