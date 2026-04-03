@@ -1,14 +1,10 @@
 name: Generate JAR on Release
-run-name: Generating JAR for ${{github.sha}} commit id.
 
 on:
   workflow_dispatch:
   release:
     types:
       - published
-  push:
-    branches:
-      - "development_deploy"
 
 jobs:
 
@@ -34,3 +30,7 @@ jobs:
       - name: Upload
         run: |
           ls -als target
+          echo "Event"
+          echo "${{github.event}}"
+          echo "Event Name"
+          echo "${{github.event_name}}"
