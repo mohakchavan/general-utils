@@ -44,12 +44,13 @@ jobs:
             echo "Release Assets URL: ${{github.event.release.assets_url}}"
             
             echo "=======Calling Release Info======="
-            curl --location "https://api.github.com/repos/${{github.repository}}/releases/${{github.event.release.id}}"\
+            curl --location --request GET "https://api.github.com/repos/${{github.repository}}/releases/${{github.event.release.id}}"\
               --verbose --output resp.txt
             
             echo "=======Uploading Asset======="
             jq -r ".upload_url" resp.txt | { read url; echo "${url%\{*}"; } | \
-              { read cleanUrl; curl --location --header "Authorization: Bearer $GITHUB_TOKEN" --header "Content-Type: text/plain" \
+              { read cleanUrl; curl --location --request POST --header "Authorization: Bearer ${{github.token}}" \
+                --header "Content-Type: text/plain" \
                 "$cleanUrl?name=resp.txt" --data-binary "@resp.txt" --verbose; }
             
           fi
