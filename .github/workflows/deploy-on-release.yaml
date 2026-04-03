@@ -36,7 +36,8 @@ jobs:
             echo "Workflow is run manually. No need to upload release assests."
           elif [[ "${{github.event_name}}" == "release" ]]; then
             echo "Workflow run on release event. Upload to release assets."
-            echo "Release Action: ${{github.release.action}}"
-            echo "Release ID:"
+            echo "Release Action: ${{github.event.action}}"
+            echo "Release ID: ${{github.event.release.id}}"
+            echo "Release Assets URL: ${{github.event.release.assets_url}}"
           fi
           
