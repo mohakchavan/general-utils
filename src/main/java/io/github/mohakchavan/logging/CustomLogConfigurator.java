@@ -14,10 +14,17 @@ import ch.qos.logback.core.LayoutBase;
 import ch.qos.logback.core.encoder.LayoutWrappingEncoder;
 import io.github.mohakchavan.Helper;
 
+/**
+ * Custom Configurator Class for logging.
+ * This class configures both the logging types i.e.: Console &amp; Debug(file) Logs.
+ */
 public class CustomLogConfigurator extends TylerConfiguratorBase implements Configurator {
 
     private final Helper helper;
 
+    /**
+     * Default constructor to initialize the parameters.
+     */
     public CustomLogConfigurator() {
         this.helper = new Helper();
     }

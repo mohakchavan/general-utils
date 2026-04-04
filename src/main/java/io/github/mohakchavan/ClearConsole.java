@@ -2,8 +2,21 @@ package io.github.mohakchavan;
 
 import java.io.IOException;
 
+/**
+ * This class is used to clear the contents which are already present in the console
+ * in which this shaded jar file is being run.
+ */
 public class ClearConsole {
 
+    /**
+     * Default constructor for {@link ClearConsole}.
+     */
+    public ClearConsole() {
+    }
+
+    /**
+     * This method clears the contents of the console.
+     */
     public void clearConsole() {
 
         try {

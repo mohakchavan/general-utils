@@ -5,10 +5,25 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Scanner;
 
+/**
+ * This class is the entry point as this class contains the main method which runs the whole program.
+ */
 public class GeneralUtils {
+
+    /**
+     * Default constructor to create an object.
+     */
+    public GeneralUtils() {
+    }
 
     private static final Logger log = LoggerFactory.getLogger(GeneralUtils.class);
 
+    /**
+     * Main method which runs the whole program and is called by the Java Virtual Machine (JVM).
+     *
+     * @param args Command-line arguments provided while running the program.
+     * @throws Exception when any unhandled problem occurs in the code.
+     */
     public static void main(String[] args) throws Exception {
 
 

@@ -12,16 +12,25 @@ import org.slf4j.LoggerFactory;
 import java.util.Base64;
 import java.util.Scanner;
 
+/**
+ * This class provides all the methods which are used for the features related to GitHub.
+ */
 public class GithubFeature {
 
     private static final Logger log = LoggerFactory.getLogger(GithubFeature.class);
 
     private final Scanner scanner;
 
+    /**
+     * Default constructor to create an object with default values.
+     */
     public GithubFeature() {
         scanner = ConsoleInputOutput.getScanner();
     }
 
+    /**
+     * This method starts the GitHub feature.
+     */
     public void startGithubFeature() {
 
         new ClearConsole().clearConsole();
