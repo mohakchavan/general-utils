@@ -4,7 +4,6 @@ on:
   workflow_dispatch:
   release:
     types:
-      - edited
       - published
 
 jobs:
@@ -29,25 +28,26 @@ jobs:
         run: |
           chmod +x mvnw
           ./mvnw clean package -P prod,!dev
-          ls -als
 
       - name: Upload
         run: |
-          if [[ "${{github.event_name}}" == "workflow_dispatch_2" ]]; then
+          if [[ "${{github.event_name}}" == "workflow_dispatch" ]]; then
             echo "Workflow is run manually. No need to upload release assests."
           
-          elif [[ "${{github.event_name}}" == "workflow_dispatch" ]]; then
-            echo "Workflow run on release event. Upload to release assets."
+          elif [[ "${{github.event_name}}" == "release" ]]; then
+            echo "Workflow is run on release event. Upload to release assets."
+            echo "Release Action: ${{github.event.action}}"
+            echo "Release ID: ${{github.event.release.id}}"
             
             echo "=======Calling Release Info======="
-            curl --location --request GET "https://api.github.com/repos/${{github.repository}}/releases/305133412"\
+            curl --location --request GET "https://api.github.com/repos/${{github.repository}}/releases/${{github.event.release.id}}"\
               --verbose --output resp.txt
             
             cleanUrl=$(jq -r ".upload_url" resp.txt | { read url; echo "${url%\{*}"; })
             echo "=======Uploading JAR Asset======="
             for file in ./target/*.jar; do
               echo
-              echo "For $file ..."
+              echo "Uploading $file ..."
               curl --location --request POST --header "Authorization: Bearer ${{github.token}}" \
                 --header "Content-Type: application/java-archive" "$cleanUrl?name=${file##*/}" \
                   --data-binary "@$file" --verbose
