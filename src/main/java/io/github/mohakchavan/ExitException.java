@@ -1,11 +1,16 @@
 package io.github.mohakchavan;
 
+import java.io.Serial;
+
 /**
  * This {@link Exception} class is thrown when the program needs to be terminated
  * based on {@code continueMainLoop} parameter defined while creating the object.
  * <p>Default value of {@code continueMainLoop} is true.</p>
  */
 public class ExitException extends RuntimeException {
+
+    @Serial
+    private static final long serialVersionUID = -5446274904124100531L;
 
     /**
      * This variable represents whether this exception needs the program to be terminated or not.

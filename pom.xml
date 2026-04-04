@@ -93,6 +93,17 @@
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <showWarnings>true</showWarnings>
+                            <compilerArgs>
+                                <arg>-Xlint:all</arg>
+                                <arg>-Werror</arg>
+                            </compilerArgs>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
                         <executions>
                             <execution>
@@ -114,6 +125,9 @@
                                 </goals>
                             </execution>
                         </executions>
+                        <configuration>
+                            <failOnWarnings>true</failOnWarnings>
+                        </configuration>
                     </plugin>
                     <!--<plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -230,7 +244,7 @@
                     <!-- Source: https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-resources-plugin -->
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
-                    <version>3.4.0</version>
+                    <version>3.5.0</version>
                 </plugin>
                 <plugin>
                     <!-- Source: https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-site-plugin -->
@@ -242,7 +256,7 @@
                     <!-- Source: https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.5.4</version>
+                    <version>3.5.5</version>
                 </plugin>
                 <plugin>
                     <!-- Source: https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-source-plugin -->
@@ -266,7 +280,7 @@
                     <!-- Source: https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-shade-plugin -->
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-shade-plugin</artifactId>
-                    <version>3.6.1</version>
+                    <version>3.6.2</version>
                 </plugin>
             </plugins>
         </pluginManagement>
