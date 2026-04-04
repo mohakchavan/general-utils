@@ -27,7 +27,7 @@ jobs:
       - name: Build
         run: |
           chmod +x mvnw
-          ./mvnw clean package -P prod,!dev
+          ./mvnw clean package --activate-profiles release,!dev
 
       - name: Upload
         run: |
@@ -47,7 +47,7 @@ jobs:
             echo "=======Uploading JAR Asset======="
             for file in ./target/*.jar; do
               echo
-              echo "Uploading $file ..."
+              echo "=======Uploading $file file======="
               curl --location --request POST --header "Authorization: Bearer ${{github.token}}" \
                 --header "Content-Type: application/java-archive" "$cleanUrl?name=${file##*/}" \
                   --data-binary "@$file" --verbose
