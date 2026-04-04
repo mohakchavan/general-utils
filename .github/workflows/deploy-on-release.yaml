@@ -1,0 +1,57 @@
+name: Generate JAR on Release
+
+on:
+  workflow_dispatch:
+  release:
+    types:
+      - published
+
+jobs:
+
+  build-jar:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          java-version: 21
+          distribution: "temurin"
+          cache: "maven"
+
+      - name: Build
+        run: |
+          chmod +x mvnw
+          ./mvnw clean package -P prod,!dev
+
+      - name: Upload
+        run: |
+          if [[ "${{github.event_name}}" == "workflow_dispatch" ]]; then
+            echo "Workflow is run manually. No need to upload release assests."
+          
+          elif [[ "${{github.event_name}}" == "release" ]]; then
+            echo "Workflow is run on release event. Upload to release assets."
+            echo "Release Action: ${{github.event.action}}"
+            echo "Release ID: ${{github.event.release.id}}"
+            
+            echo "=======Calling Release Info======="
+            curl --location --request GET "https://api.github.com/repos/${{github.repository}}/releases/${{github.event.release.id}}"\
+              --verbose --output resp.txt
+            
+            cleanUrl=$(jq -r ".upload_url" resp.txt | { read url; echo "${url%\{*}"; })
+            echo "=======Uploading JAR Asset======="
+            for file in ./target/*.jar; do
+              echo
+              echo "Uploading $file ..."
+              curl --location --request POST --header "Authorization: Bearer ${{github.token}}" \
+                --header "Content-Type: application/java-archive" "$cleanUrl?name=${file##*/}" \
+                  --data-binary "@$file" --verbose
+            done
+            
+          fi
+          
