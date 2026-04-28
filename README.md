@@ -4,6 +4,12 @@
 This java project provides few of the features which are required by the developers. This project is fully developed
 using JAVA language. The main feature of this project is that it runs in offline mode.
 
+## Table of Contents
+
+[TOCM]
+
+[TOC]
+
 ## Usage
 This project is developed using Java v21. So to run this project directly from the command line, use the v21 of Java
 and shaded jar provided in the [release](https://github.com/mohakchavan/general-utils/releases) assets.
@@ -33,7 +39,28 @@ the GitHub's API or wherever it is required.
 ![GitHub-Encoding-Feature](./assets/github-encoding-feature.gif)
 
 > [!NOTE]
-> Ofcourse, the values shown here are not real and you have to replace them with real values.
+> Ofcourse, the values shown here are sample values and you have to replace them with real values.
 
 ## Logs
-All the debug logs related to this project are stored in "./general-utils-logs.txt" file.
+All the debug logs related to this project are stored in "./general-utils-logs.txt" file. The logs are appended if
+the log file already exists.
+
+### Sample
+```text
+2026-04-28T11:04:04.595+0000 [main] DEBUG io.github.mohakchavan.GeneralUtils -- activeProfile: release
+2026-04-28T11:10:45.805+0000 [main] DEBUG io.github.mohakchavan.GeneralUtils -- activeProfile: release
+2026-04-28T11:11:05.155+0000 [main] ERROR io.github.mohakchavan.GithubFeature -- Invalid Base64 public key. Stacktrace: 
+java.lang.IllegalArgumentException: Last unit does not have enough valid bits
+	at java.base/java.util.Base64$Decoder.decode0(Base64.java:872)
+	at java.base/java.util.Base64$Decoder.decode(Base64.java:570)
+	at java.base/java.util.Base64$Decoder.decode(Base64.java:593)
+	at io.github.mohakchavan.GithubFeature.decodePublicKey(GithubFeature.java:94)
+	at io.github.mohakchavan.GithubFeature.encryptSecretWithKey(GithubFeature.java:72)
+	at io.github.mohakchavan.GithubFeature.startGithubFeature(GithubFeature.java:45)
+	at io.github.mohakchavan.GeneralUtils.parseFeatureNumber(GeneralUtils.java:80)
+	at io.github.mohakchavan.GeneralUtils.main(GeneralUtils.java:49)
+2026-04-28T11:25:05.766+0000 [main] DEBUG io.github.mohakchavan.GeneralUtils -- activeProfile: release
+2026-04-28T11:27:04.973+0000 [main] DEBUG io.github.mohakchavan.GeneralUtils -- activeProfile: release
+```
+> [!NOTE]
+> The timestamp in the logs are in UTC.
