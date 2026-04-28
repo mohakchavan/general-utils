@@ -32,8 +32,8 @@ the GitHub's API or wherever it is required.
 
 ![GitHub-Encoding-Feature](./assets/github-encoding-feature.gif)
 
-[!NOTE]
-Ofcourse, the values shown here are not real and you have to replace them with real values.
+> [!NOTE]
+> Ofcourse, the values shown here are not real and you have to replace them with real values.
 
 ## Logs
 All the debug logs related to this project are stored in "./general-utils-logs.txt" file.
