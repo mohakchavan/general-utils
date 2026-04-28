@@ -12,7 +12,8 @@ java -jar general-utils-[release-version]-shaded.jar
 ```
 By running the above command will generate the output:<br/>
 ![Output](./assets/ffmpegGIF.gif)<br/>
-![Output](./assets/ffmpegGIF2.gif)
+![Output](./assets/ffmpegGIF2.gif)<br/>
+![Output](./assets/ffmpegGIF3.gif)<br/>
 
 
 ## Features
