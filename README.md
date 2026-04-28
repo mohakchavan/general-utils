@@ -4,12 +4,6 @@
 This java project provides few of the features which are required by the developers. This project is fully developed
 using JAVA language. The main feature of this project is that it runs in offline mode.
 
-## Table of Contents
-
-[TOCM]
-
-[TOC]
-
 ## Usage
 This project is developed using Java v21. So to run this project directly from the command line, use the v21 of Java
 and shaded jar provided in the [release](https://github.com/mohakchavan/general-utils/releases) assets.
@@ -17,14 +11,15 @@ and shaded jar provided in the [release](https://github.com/mohakchavan/general-
 java -jar general-utils-[release-version]-shaded.jar
 ```
 
-By running the above command will generate the output:<br/><br/>
+By running the above command, following output will be generated:<br/><br/>
 ![Basic-Output](./assets/basic-output.gif)<br/>
 
-Various options are shown in the numbered list in the output when the jar file is run. Choose the feature you want
-to run by entering the respective number when prompted. There is also a feature/option to exit the program by
-entering "-1" as a feature number when prompted.
-
 ## Features
+Various features/options are shown in the numbered list in the output when the jar file is run. Choose the feature
+you want to run by entering the respective number when prompted. There is also a feature/option to exit the program
+by entering "-1" as a feature number when prompted.
+
+The features which are currently implemented are as follows:
 - [GitHub Feature](#github-feature)
 - [Logs](#logs)
 
