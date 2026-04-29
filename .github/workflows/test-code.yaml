@@ -10,7 +10,6 @@ on:
     branches:
       - "development_automate"
 
-
 jobs:
 
   test-code:
@@ -24,7 +23,7 @@ jobs:
 
       - name: Check if branch updated
         run: |
-          if ( git merge-base origin/master origin/development_automate ); then
+          if ( git merge-base --is-ancestor origin/master origin/development_automate ); then
             echo "Branch is updated."
           
           else
