@@ -28,7 +28,9 @@ jobs:
           
           elif [[ "${{github.event_name}}" == "pull_request" ]]; then
             echo "Workflow is run on pull request event. Need to check if branch is updated or not."
+            echo "Base(Target) Ref: ${{github.event.pull_request.base.ref}}"
             echo "Base(Target) SHA: ${{github.event.pull_request.base.sha}}"
+            echo "Head(Source) Ref: ${{github.event.pull_request.head.ref}}"
             echo "Head(Source) SHA: ${{github.event.pull_request.head.sha}}"
           
             if ( git merge-base --is-ancestor ${{github.event.pull_request.base.sha}} ${{github.event.pull_request.head.sha}} ); then
