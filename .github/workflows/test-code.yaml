@@ -1,0 +1,28 @@
+name: Test Code
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - development_automate
+
+jobs:
+
+  test-code:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          java-version: 21
+          distribution: "temurin"
+          cache: "maven"
+
+      - name: Clean, Complie & Test Code
+        run: |
+          chmod +x mvnw
+          ./mvnw clean test --activate-profiles release,!dev
