@@ -33,8 +33,8 @@ jobs:
             echo "Head(Source) Ref: ${{github.event.pull_request.head.ref}}"
             echo "Head(Source) SHA: ${{github.event.pull_request.head.sha}}"
           
-            if (( git merge-base --is-ancestor "${{github.event.pull_request.base.sha}}" "${{github.event.pull_request.head.sha}}" &&
-                  git merge-base --is-ancestor "${{github.event.pull_request.base.ref}}" "${{github.event.pull_request.head.ref}}" )); then
+            if ( git merge-base --is-ancestor "${{github.event.pull_request.base.sha}}" "${{github.event.pull_request.head.sha}}" &&
+                  git merge-base --is-ancestor "${{github.event.pull_request.base.ref}}" "${{github.event.pull_request.head.ref}}" ); then
               echo "Branch is updated."
           
             else
