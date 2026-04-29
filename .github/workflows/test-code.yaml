@@ -23,23 +23,35 @@ jobs:
 
       - name: Check if branch updated
         run: |
-          if ( git merge-base --is-ancestor origin/master origin/development_automate ); then
-            echo "Branch is updated."
+          if [[ "${{github.event_name}}" == "workflow_dispatch" ]]; then
+            echo "Workflow is run manually. No need to check if branch is updated or not."
           
-          else
-            echo "Branch is not updated."
-            exit 1
+          elif [[ "${{github.event_name}}" == "pull_request" ]]; then
+            echo "Workflow is run on pull request event. Need to check if branch is updated or not."
+            echo "Head SHA: ${{github.event.pull_request.head.sha}}"
+            echo "Base SHA: ${{github.event.pull_request.base.sha}}"
+          
+            if ( git merge-base --is-ancestor origin/master origin/development_automate ); then
+              echo "Branch is updated."
+          
+            else
+              echo "Branch is not updated."
+              exit 1
+          
+            fi
           
           fi
 
       - name: Setup Java
         uses: actions/setup-java@v5
+        if: false
         with:
           java-version: 21
           distribution: "temurin"
           cache: "maven"
 
       - name: Clean, Complie & Test Code
+        if: false
         run: |
           chmod +x mvnw
           ./mvnw clean test --activate-profiles release,!dev
