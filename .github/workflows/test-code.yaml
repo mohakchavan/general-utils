@@ -22,6 +22,7 @@ jobs:
           fetch-depth: 0
 
       - name: Check if branch updated
+        shell: sh
         run: |
           if [[ "${{github.event_name}}" == "workflow_dispatch" ]]; then
             echo "Workflow is run manually. No need to check if branch is updated or not."
