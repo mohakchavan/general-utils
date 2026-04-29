@@ -21,7 +21,7 @@ jobs:
 
       - name: Check if branch updated
         run: |
-          if [[ git merge-base origin/developement_automate origin/master ]]; then
+          if [ git merge-base origin/developement_automate origin/master ]; then
             echo "Branch is updated."
           
           else
