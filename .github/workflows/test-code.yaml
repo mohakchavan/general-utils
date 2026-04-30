@@ -33,6 +33,7 @@ jobs:
             echo "Base(Target) SHA: ${{github.event.pull_request.base.sha}}"
             echo "Head(Source) Ref: ${{github.event.pull_request.head.ref}}"
             echo "Head(Source) SHA: ${{github.event.pull_request.head.sha}}"
+            git branch --all
           
             if ( git merge-base --is-ancestor "${{github.event.pull_request.base.sha}}" "${{github.event.pull_request.head.sha}}" &&
                   git merge-base --is-ancestor "${{github.event.pull_request.base.ref}}" "${{github.event.pull_request.head.ref}}" ); then
