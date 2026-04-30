@@ -37,10 +37,10 @@ jobs:
           
             if ( git merge-base --is-ancestor "${{github.event.pull_request.base.sha}}" "${{github.event.pull_request.head.sha}}" &&
                   git merge-base --is-ancestor "origin/${{github.event.pull_request.base.ref}}" "origin/${{github.event.pull_request.head.ref}}" ); then
-              echo "Branch is updated."
+              echo "Head(Source) branch is updated."
           
             else
-              echo "Branch is not updated."
+              echo "Head(Source) branch is not updated."
               exit 1
           
             fi
