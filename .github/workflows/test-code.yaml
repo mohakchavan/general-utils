@@ -20,7 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Check if branch updated
         shell: sh
@@ -34,6 +34,9 @@ jobs:
             echo "Base(Target) SHA: ${{github.event.pull_request.base.sha}}"
             echo "Head(Source) Ref: ${{github.event.pull_request.head.ref}}"
             echo "Head(Source) SHA: ${{github.event.pull_request.head.sha}}"
+            
+            echo "Branch all"
+            git branch --all
           
             if ( git merge-base --is-ancestor "${{github.event.pull_request.base.sha}}" "${{github.event.pull_request.head.sha}}" &&
                   git merge-base --is-ancestor "origin/${{github.event.pull_request.base.ref}}" "origin/${{github.event.pull_request.head.ref}}" ); then
