@@ -19,8 +19,20 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v6
-        with:
-          fetch-depth: 1
+
+      - name: Test Time
+        shell: sh
+        run: |
+          echo "Branch all"
+          git branch --all
+          echo "Fetch base ref"
+          git fetch origin ${{github.event.pull_request.base.ref}}:${{github.event.pull_request.base.ref}}
+          git branch --set-upstream-to origin/${{github.event.pull_request.base.ref}} ${{github.event.pull_request.base.ref}}
+          echo "Fetch head ref"
+          git fetch origin ${{github.event.pull_request.head.ref}}:${{github.event.pull_request.head.ref}}
+          git branch --set-upstream-to origin/${{github.event.pull_request.head.ref}} ${{github.event.pull_request.head.ref}}
+          echo "Branch all"
+          git branch --all
 
       - name: Check if branch updated
         shell: sh
@@ -34,13 +46,6 @@ jobs:
             echo "Base(Target) SHA: ${{github.event.pull_request.base.sha}}"
             echo "Head(Source) Ref: ${{github.event.pull_request.head.ref}}"
             echo "Head(Source) SHA: ${{github.event.pull_request.head.sha}}"
-            
-            echo "Branch all"
-            git branch --all
-            echo "Fetch base ref"
-            git fetch origin ${{github.event.pull_request.base.ref}}:${{github.event.pull_request.base.ref}}
-            echo "Branch all"
-            git branch --all
           
             if ( git merge-base --is-ancestor "${{github.event.pull_request.base.sha}}" "${{github.event.pull_request.head.sha}}" &&
                   git merge-base --is-ancestor "origin/${{github.event.pull_request.base.ref}}" "origin/${{github.event.pull_request.head.ref}}" ); then
