@@ -1,4 +1,4 @@
-name: Test Code
+name: Compile & Test Code
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ on:
       - synchronize
       - reopened
     branches:
-      - "development_automate"
+      - "development"
 
 jobs:
 
