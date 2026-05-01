@@ -25,24 +25,19 @@ jobs:
         shell: sh
         run: |
           if [ "${{github.event_name}}" = "workflow_dispatch" ]; then
+            echo "Workflow is run manually."
             echo "run-mode=1" >> $GITHUB_OUTPUT
           
           elif [ "${{github.event_name}}" = "pull_request" ]; then
+            echo "Workflow is run on pull request event."
             echo "run-mode=2" >> $GITHUB_OUTPUT
           
           fi
 
-      - name: Get Mode
-        shell: sh
-        run: |
-          echo "Run Mode: ${{ steps.set-run-mode.outputs.run-mode }}"
-
-      - name: Fetch Base & Head branches
+      - name: Fetch base & head branches
         if: ${{ steps.set-run-mode.outputs.run-mode == 2 }}
         shell: sh
         run: |
-          echo "Branch all"
-          git branch --all
           echo "Fetch base ref"
           git fetch --no-tags origin ${{github.event.pull_request.base.ref}}:${{github.event.pull_request.base.ref}}
           git branch --set-upstream-to origin/${{github.event.pull_request.base.ref}} ${{github.event.pull_request.base.ref}}
@@ -74,14 +69,12 @@ jobs:
 
       - name: Setup Java
         uses: actions/setup-java@v5
-        if: false
         with:
           java-version: 21
           distribution: "temurin"
           cache: "maven"
 
-      - name: Clean, Complie & Test Code
-        if: false
+      - name: Clean, complie & test code
         run: |
           chmod +x mvnw
           ./mvnw clean test --activate-profiles release,!dev
