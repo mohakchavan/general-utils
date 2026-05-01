@@ -26,10 +26,10 @@ jobs:
           echo "Branch all"
           git branch --all
           echo "Fetch base ref"
-          git fetch origin ${{github.event.pull_request.base.ref}}:${{github.event.pull_request.base.ref}}
+          git fetch --no-tags origin ${{github.event.pull_request.base.ref}}:${{github.event.pull_request.base.ref}}
           git branch --set-upstream-to origin/${{github.event.pull_request.base.ref}} ${{github.event.pull_request.base.ref}}
           echo "Fetch head ref"
-          git fetch origin ${{github.event.pull_request.head.ref}}:${{github.event.pull_request.head.ref}}
+          git fetch --no-tags origin ${{github.event.pull_request.head.ref}}:${{github.event.pull_request.head.ref}}
           git branch --set-upstream-to origin/${{github.event.pull_request.head.ref}} ${{github.event.pull_request.head.ref}}
           echo "Branch all"
           git branch --all
