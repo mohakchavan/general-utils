@@ -20,7 +20,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Test Time
+      - name: Set run mode
+        id: set-run-mode
+        shell: sh
+        run: |
+          if [ "${{github.event_name}}" = "workflow_dispatch" ]; then
+            echo "run-mode=1" >> $GITHUB_OUTPUT
+          
+          elif [ "${{github.event_name}}" = "pull_request" ]; then
+            echo "run-mode=2" >> $GITHUB_OUTPUT
+          
+          fi
+
+      - name: Get Mode
+        shell: sh
+        run: |
+          echo "Run Mode: ${{ steps.set-run-mode.outputs.run-mode }}"
+
+      - name: Fetch Base & Head branches
+        if: ${{ steps.set-run-mode.outputs.run-mode == 2 }}
         shell: sh
         run: |
           echo "Branch all"
@@ -35,27 +53,22 @@ jobs:
           git branch --all
 
       - name: Check if branch updated
+        if: ${{ steps.set-run-mode.outputs.run-mode == 2 }}
         shell: sh
         run: |
-          if [ "${{github.event_name}}" = "workflow_dispatch" ]; then
-            echo "Workflow is run manually. No need to check if branch is updated or not."
+          echo "Workflow is run on pull request event. Need to check if branch is updated or not."
+          echo "Base(Target) Ref: ${{github.event.pull_request.base.ref}}"
+          echo "Base(Target) SHA: ${{github.event.pull_request.base.sha}}"
+          echo "Head(Source) Ref: ${{github.event.pull_request.head.ref}}"
+          echo "Head(Source) SHA: ${{github.event.pull_request.head.sha}}"
           
-          elif [ "${{github.event_name}}" = "pull_request" ]; then
-            echo "Workflow is run on pull request event. Need to check if branch is updated or not."
-            echo "Base(Target) Ref: ${{github.event.pull_request.base.ref}}"
-            echo "Base(Target) SHA: ${{github.event.pull_request.base.sha}}"
-            echo "Head(Source) Ref: ${{github.event.pull_request.head.ref}}"
-            echo "Head(Source) SHA: ${{github.event.pull_request.head.sha}}"
+          if ( git merge-base --is-ancestor "${{github.event.pull_request.base.sha}}" "${{github.event.pull_request.head.sha}}" &&
+                git merge-base --is-ancestor "origin/${{github.event.pull_request.base.ref}}" "origin/${{github.event.pull_request.head.ref}}" ); then
+            echo "Head(Source) branch is updated."
           
-            if ( git merge-base --is-ancestor "${{github.event.pull_request.base.sha}}" "${{github.event.pull_request.head.sha}}" &&
-                  git merge-base --is-ancestor "origin/${{github.event.pull_request.base.ref}}" "origin/${{github.event.pull_request.head.ref}}" ); then
-              echo "Head(Source) branch is updated."
-          
-            else
-              echo "Head(Source) branch is not updated."
-              exit 1
-          
-            fi
+          else
+            echo "Head(Source) branch is not updated."
+            exit 1
           
           fi
 
