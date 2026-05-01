@@ -1,4 +1,4 @@
-[![Generate JAR on Release](https://github.com/mohakchavan/general-utils/actions/workflows/deploy-on-release.yaml/badge.svg)](https://github.com/mohakchavan/general-utils/actions/workflows/deploy-on-release.yaml)
+[![Compile & Test Code](https://github.com/mohakchavan/general-utils/actions/workflows/compile-test-code.yaml/badge.svg?branch=development)](https://github.com/mohakchavan/general-utils/actions/workflows/compile-test-code.yaml)
 
 # General Utils
 This java project provides few of the features which are required by the developers. This project is fully developed
