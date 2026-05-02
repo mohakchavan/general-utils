@@ -5,7 +5,7 @@ print_branch() {
   echo "Received $1"
 
   curl --location --request GET --header "Authorization: Bearer $token" \
-    "https://api.github.com/repos/$repo/actions/caches" --data "ref=$1" --verbose
+    "https://api.github.com/repos/$repo/actions/caches" --data "ref=$1" --get --verbose
 }
 
 if [ "$#" -eq 0 ]; then
