@@ -1,11 +1,12 @@
 echo "Executing delete-cache.sh script..."
 
-print_branch() {
-  echo "Inside print_branch"
-  echo "Received $1"
+acquire_caches() {
+  echo "Inside acquire_caches"
 
   curl --location --request GET --header "Authorization: Bearer $token" \
-    "https://api.github.com/repos/$repo/actions/caches" --data "ref=$1" --get --verbose
+    "https://api.github.com/repos/$repo/actions/caches" \
+    --data "ref=$1" --data "per_page=$per_page" \
+    --get --verbose
 }
 
 if [ "$#" -eq 0 ]; then
@@ -30,7 +31,8 @@ repo="$1"
 shift 1
 token="$1"
 shift 1
+per_page=1
 
 for br in "$@"; do
-  print_branch "$br"
+  acquire_caches "$br"
 done
