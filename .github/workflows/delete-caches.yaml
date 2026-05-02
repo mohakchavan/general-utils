@@ -24,7 +24,7 @@ jobs:
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
-            ".github/scripts/delete-cache.sh"
+            .github/scripts/delete-cache.sh
 
       - name: Set run mode
         id: set-run-mode
