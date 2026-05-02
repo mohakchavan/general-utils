@@ -19,6 +19,13 @@ jobs:
       actions: write
     steps:
 
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            ".github/scripts/delete-cache.sh"
+
       - name: Set run mode
         id: set-run-mode
         shell: sh
@@ -45,3 +52,5 @@ jobs:
         run: |
           echo "Branch_1: refs/pull/${{github.event.pull_request.number}}/merge"
           echo "Branch_2: refs/heads/${{github.event.pull_request.head.ref}}"
+          pwd
+          ls -als
