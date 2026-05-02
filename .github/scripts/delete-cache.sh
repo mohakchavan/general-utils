@@ -19,4 +19,6 @@ elif [ -z "$2" ]; then
 
 fi
 
-print_branch "$2"
+for br in "$@"; do
+  print_branch "$br"
+done

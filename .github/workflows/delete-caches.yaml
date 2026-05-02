@@ -51,6 +51,7 @@ jobs:
         shell: sh
         run: |
           echo "Branch_1: refs/pull/${{github.event.pull_request.number}}/merge"
+          b1="refs/pull/${{github.event.pull_request.number}}/merge"
           echo "Branch_2: refs/heads/${{github.event.pull_request.head.ref}}"
-          pwd
-          ls -als
+          b2="refs/heads/${{github.event.pull_request.head.ref}}"
+          sh .github/scripts/delete-cache.sh "github_token" "$b1" "$b2" 
