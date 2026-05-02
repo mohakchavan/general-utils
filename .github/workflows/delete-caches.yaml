@@ -23,6 +23,7 @@ jobs:
         id: set-run-mode
         shell: sh
         run: |
+          echo "Ref: ${{github.ref}}"
           if [ "${{github.event_name}}" = "workflow_dispatch" ]; then
             echo "Workflow is run manually."
             echo "branch=${{github.event.ref}}" >> $GITHUB_OUTPUT
