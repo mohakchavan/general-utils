@@ -63,7 +63,7 @@ per_page=1
 for br in "$@"; do
 
   echo "in for loop"
-  local completed=1
+  completed=1
   while [ $completed -eq 1 ]; do
     if acquire_and_delete "$br" ; then
       completed=0
