@@ -26,16 +26,25 @@ jobs:
           echo "Ref: ${{github.ref}}"
           if [ "${{github.event_name}}" = "workflow_dispatch" ]; then
             echo "Workflow is run manually."
-            echo "branch=${{github.event.ref}}" >> $GITHUB_OUTPUT
+            echo "run-mode=1" >> $GITHUB_OUTPUT
+#            echo "branch=${{github.event.ref}}" >> $GITHUB_OUTPUT
 
           elif [ "${{github.event_name}}" = "pull_request" ]; then
             echo "Workflow is run on pull request event."
-            echo "branch=${{github.event.pull_request.head.ref}}" >> $GITHUB_OUTPUT
+            echo "run-mode=2" >> $GITHUB_OUTPUT
+#            echo "branch=${{github.event.pull_request.head.ref}}" >> $GITHUB_OUTPUT
 
           fi
 
-      - name: Clean-up
+      - name: Clean-up for manual
+        if: ${{ steps.set-run-mode.outputs.run-mode == 1 }}
         shell: sh
         run: |
-          echo "Acquiring caches"
-          echo "Branch: ${{steps.set-run-mode.outputs.branch}}"
+          echo "Branch: ${{github.event.ref}}"
+
+      - name: Clean-up for pull_request
+        if: ${{ steps.set-run-mode.outputs.run-mode == 2 }}
+        shell: sh
+        run: |
+          echo "Branch_1: refs/pull/${{github.event.pull_request.number}}/merge"
+          echo "Branch_2: ${{github.event.pull_request.head.ref}}"
