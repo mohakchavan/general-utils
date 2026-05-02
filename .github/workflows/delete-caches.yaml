@@ -2,7 +2,10 @@ name: Delete Caches
 
 on:
   workflow_dispatch:
-  push:
+  pull_request:
+    types:
+      - opened
+      - synchronize
     branches:
       - "development_cache"
 
