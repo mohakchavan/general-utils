@@ -1,7 +1,7 @@
 echo "Executing delete-cache script..."
 
 print_branch() {
-  echo "Inside print_branch"
+  echo "Inside print_branch $token"
   echo "Received $1"
 }
 
@@ -18,6 +18,11 @@ elif [ -z "$2" ]; then
     exit 1
 
 fi
+
+token="$1"
+echo "$token"
+
+shift 1
 
 for br in "$@"; do
   print_branch "$br"
