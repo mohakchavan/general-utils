@@ -1,8 +1,10 @@
-echo "Executing delete-cache script..."
+echo "Executing delete-cache.sh $0 script..."
 
 print_branch() {
-  echo "Inside print_branch $token"
+  echo "Inside print_branch"
   echo "Received $1"
+
+
 }
 
 if [ "$#" -eq 0 ]; then
@@ -20,7 +22,6 @@ elif [ -z "$2" ]; then
 fi
 
 token="$1"
-echo "$token"
 
 shift 1
 

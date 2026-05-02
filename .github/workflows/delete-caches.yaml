@@ -45,6 +45,8 @@ jobs:
         shell: sh
         run: |
           echo "Branch: ${{github.event.ref}}"
+          b1="${{github.event.ref}}"
+          sh .github/scripts/delete-cache.sh "github_token" "$b1"
 
       - name: Clean-up for pull_request
         if: ${{ steps.set-run-mode.outputs.run-mode == 2 }}
