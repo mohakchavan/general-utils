@@ -1,0 +1,36 @@
+name: Delete Caches
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "development_cache"
+
+jobs:
+
+  delete-cache:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
+    steps:
+
+      - name: Set run mode
+        id: set-run-mode
+        shell: sh
+        run: |
+          if [ "${{github.event_name}}" = "workflow_dispatch" ]; then
+            echo "Workflow is run manually."
+            echo "branch=${{github.event.ref}}" >> $GITHUB_OUTPUT
+
+          elif [ "${{github.event_name}}" = "pull_request" ]; then
+            echo "Workflow is run on pull request event."
+            echo "branch=${{github.event.ref}}" >> $GITHUB_OUTPUT
+
+          fi
+
+      - name: Clean-up
+        shell: sh
+        run: |
+          echo "Acquiring caches"
+          echo "Branch: ${{steps.set-run-mode.outputs.branch}}"
