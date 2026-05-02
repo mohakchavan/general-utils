@@ -23,7 +23,6 @@ jobs:
         id: set-run-mode
         shell: sh
         run: |
-          echo "Ref: ${{github.ref}}"
           if [ "${{github.event_name}}" = "workflow_dispatch" ]; then
             echo "Workflow is run manually."
             echo "run-mode=1" >> $GITHUB_OUTPUT
@@ -45,4 +44,4 @@ jobs:
         shell: sh
         run: |
           echo "Branch_1: refs/pull/${{github.event.pull_request.number}}/merge"
-          echo "Branch_2: ${{github.event.pull_request.head.ref}}"
+          echo "Branch_2: refs/heads/${{github.event.pull_request.head.ref}}"

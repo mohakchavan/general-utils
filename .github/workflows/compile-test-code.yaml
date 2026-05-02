@@ -9,7 +9,6 @@ on:
       - reopened
     branches:
       - "development"
-      - "development_cache"
 
 jobs:
 
