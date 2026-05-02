@@ -11,7 +11,10 @@ acquire_caches() {
 
 delete_cache() {
   echo "Inside delete_cache"
-  echo "$1"
+
+  curl --location --fail-with-body --request DELETE --header "Authorization: Bearer $token" \
+      "https://api.github.com/repos/$repo/actions/caches/$1" \
+      --verbose
 }
 
 acquire_and_delete() {
@@ -58,7 +61,7 @@ repo="$1"
 shift 1
 token="$1"
 shift 1
-per_page=2
+per_page=1
 
 for br in "$@"; do
 
