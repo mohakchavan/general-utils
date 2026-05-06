@@ -6,8 +6,7 @@ on:
     types:
       - closed
     branches:
-      - "development_cache"
-
+      - "development"
 
 jobs:
 

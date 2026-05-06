@@ -61,7 +61,7 @@ repo="$1"
 shift 1
 token="$1"
 shift 1
-per_page=1
+per_page=100
 
 for br in "$@"; do
 
