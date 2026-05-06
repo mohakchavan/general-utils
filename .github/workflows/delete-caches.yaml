@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
   pull_request:
     types:
-      - opened
-      - synchronize
+      - closed
     branches:
       - "development_cache"
+
 
 jobs:
 
@@ -18,22 +18,40 @@ jobs:
       actions: write
     steps:
 
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            .github/scripts/delete-cache.sh
+
       - name: Set run mode
         id: set-run-mode
         shell: sh
         run: |
           if [ "${{github.event_name}}" = "workflow_dispatch" ]; then
             echo "Workflow is run manually."
-            echo "branch=${{github.event.ref}}" >> $GITHUB_OUTPUT
+            echo "run-mode=1" >> $GITHUB_OUTPUT
 
           elif [ "${{github.event_name}}" = "pull_request" ]; then
             echo "Workflow is run on pull request event."
-            echo "branch=${{github.event.pull_request.head.ref}}" >> $GITHUB_OUTPUT
+            echo "run-mode=2" >> $GITHUB_OUTPUT
 
           fi
 
-      - name: Clean-up
+      - name: Clean-up for manual
+        if: ${{ steps.set-run-mode.outputs.run-mode == 1 }}
         shell: sh
         run: |
-          echo "Acquiring caches"
-          echo "Branch: ${{steps.set-run-mode.outputs.branch}}"
+          echo "Branch: ${{github.event.ref}}"
+
+      - name: Clean-up for pull_request
+        if: ${{ steps.set-run-mode.outputs.run-mode == 2 }}
+        shell: sh
+        run: |
+          echo "Branch_1: refs/pull/${{github.event.pull_request.number}}/merge"
+          b1="refs/pull/${{github.event.pull_request.number}}/merge"
+          echo "Branch_2: refs/heads/${{github.event.pull_request.head.ref}}"
+          b2="refs/heads/${{github.event.pull_request.head.ref}}"
+          
+          sh .github/scripts/delete-cache.sh "${{github.repository}}" "${{github.token}}" "$b1" "$b2" 
