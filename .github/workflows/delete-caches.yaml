@@ -47,7 +47,7 @@ jobs:
           echo "Branch: ${{github.event.ref}}"
 
       - name: Clean-up for pull_request
-        if: ${{ steps.set-run-mode.outputs.run-mode == 2 }}
+        if: false
         shell: sh
         run: |
           echo "Branch_1: refs/pull/${{github.event.pull_request.number}}/merge"
