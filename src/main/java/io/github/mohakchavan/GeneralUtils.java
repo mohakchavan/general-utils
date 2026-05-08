@@ -10,13 +10,16 @@ import java.util.Scanner;
  */
 public class GeneralUtils {
 
+    private static final Logger log = LoggerFactory.getLogger(GeneralUtils.class);
+
+    private final SystemExit systemExit;
+
     /**
      * Default constructor to create an object.
      */
-    public GeneralUtils() {
+    public GeneralUtils(SystemExit systemExit) {
+        this.systemExit = systemExit;
     }
-
-    private static final Logger log = LoggerFactory.getLogger(GeneralUtils.class);
 
     /**
      * Main method which runs the whole program and is called by the Java Virtual Machine (JVM).
@@ -26,6 +29,11 @@ public class GeneralUtils {
      */
     public static void main(String[] args) throws Exception {
 
+        GeneralUtils generalUtils = new GeneralUtils(new SystemExit());
+        generalUtils.executeMainMethod(args);
+    }
+
+    public void executeMainMethod(String[] args) throws Exception {
 
         ApplicationProperties.load();
         ApplicationProperties properties = new ApplicationProperties();
@@ -65,15 +73,16 @@ public class GeneralUtils {
         }
     }
 
-    private static void exitSystem(Helper helper, ApplicationProperties properties) {
+    private void exitSystem(Helper helper, ApplicationProperties properties) {
         if (properties.isFileLogEnabled() && !helper.isStringEmpty(properties.getLogFile())) {
             ConsoleInputOutput.write("\nDebug logs for more details can be found in " +
                     "\"" + properties.getLogFile() + "\" file. Program will now exit.");
         }
-        System.exit(0);
+        ConsoleInputOutput.clear();
+        systemExit.exit(0);
     }
 
-    private static void parseFeatureNumber(int featureNumber) {
+    private void parseFeatureNumber(int featureNumber) {
         switch (featureNumber) {
             case 1: {
                 GithubFeature githubFeature = new GithubFeature();
@@ -87,12 +96,12 @@ public class GeneralUtils {
         }
     }
 
-    private static void incorrectFeatureNumber() {
+    private void incorrectFeatureNumber() {
         ConsoleInputOutput.write("\nPlease enter correct feature number.");
         sleep();
     }
 
-    private static void sleep() {
+    private void sleep() {
         try {
             Thread.sleep(3000L);
         } catch (InterruptedException e) {

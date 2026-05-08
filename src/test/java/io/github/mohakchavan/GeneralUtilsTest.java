@@ -1,38 +1,37 @@
 package io.github.mohakchavan;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
-/**
- * Unit test for simple App.
- */
-public class GeneralUtilsTest
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public GeneralUtilsTest(String testName )
-    {
-        super( testName );
-    }
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( GeneralUtilsTest.class );
-    }
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Order(1)
+public class GeneralUtilsTest extends MainTest {
+
+    @Test
+    void testIfProgramExistsWithoutRunningAnyFeature() {
+
+        SystemExit systemExit = mock(SystemExit.class);
+
+        InputStream originalInputStream = System.in;
+        String input = "-1";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+
+        try {
+            new GeneralUtils(systemExit).executeMainMethod(new String[]{});
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+        }
+
+        verify(systemExit).exit(0);
+        System.setIn(originalInputStream);
+
     }
 }

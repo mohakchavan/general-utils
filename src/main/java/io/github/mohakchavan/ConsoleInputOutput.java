@@ -11,10 +11,27 @@ import java.util.Scanner;
  */
 public class ConsoleInputOutput {
 
+    private static final Logger log = LoggerFactory.getLogger(ConsoleInputOutput.class);
+
+    private Scanner scanner = null;
+
+    private static ConsoleInputOutput consoleInputOutput = null;
+
     private ConsoleInputOutput() {
+        Console console = System.console();
+        if (console != null) {
+            scanner = new Scanner(console.reader());
+        } else {
+            scanner = new Scanner(System.in);
+        }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ConsoleInputOutput.class);
+    private static ConsoleInputOutput getInstance() {
+        if (consoleInputOutput == null) {
+            consoleInputOutput = new ConsoleInputOutput();
+        }
+        return consoleInputOutput;
+    }
 
     /**
      * This method writes the provided {@code message} to console.
@@ -51,14 +68,11 @@ public class ConsoleInputOutput {
      * @return The {@link Scanner} object.
      */
     public static Scanner getScanner() {
-        Console console = System.console();
-        Scanner scanner;
-        if (console != null) {
-            scanner = new Scanner(console.reader());
-        } else {
-            scanner = new Scanner(System.in);
-        }
-        return scanner;
+        return getInstance().scanner;
+    }
+
+    public static void clear() {
+        consoleInputOutput = null;
     }
 
 }
