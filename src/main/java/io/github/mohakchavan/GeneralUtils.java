@@ -1,5 +1,7 @@
 package io.github.mohakchavan;
 
+import io.github.mohakchavan.feature.github.GithubFeature;
+import io.github.mohakchavan.feature.github.Mode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,6 +80,12 @@ public class GeneralUtils {
             case 1: {
                 GithubFeature githubFeature = new GithubFeature();
                 githubFeature.startGithubFeature();
+                break;
+            }
+
+            case 2: {
+                GithubFeature githubFeature = new GithubFeature();
+                githubFeature.startGithubFeature(Mode.FILE);
                 break;
             }
 

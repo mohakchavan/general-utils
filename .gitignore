@@ -41,3 +41,10 @@ build/
 
 ### Logs ###
 general-utils-logs.txt
+
+### Keystores ###
+*.p12
+*.pfx
+*.jks
+*.jceks
+*.keystore
