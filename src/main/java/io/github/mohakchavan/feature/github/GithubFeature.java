@@ -54,8 +54,6 @@ public class GithubFeature {
             secret = acquireSecret();
         } else if (mode == Mode.FILE) {
             secret = acquireFileSecret();
-        } else {
-
         }
 
         if (helper.isStringEmpty(secret)) {
@@ -69,7 +67,6 @@ public class GithubFeature {
         if (mode == Mode.TEXT) {
             showEncryptedSecret(encryptedSecret);
         } else if (mode == Mode.FILE) {
-//            showEncryptedSecret(encryptedSecret);
             writeEncryptedSecret(encryptedSecret);
         }
 

@@ -9,6 +9,8 @@ public class Helper {
      * Default construtor to create an object.
      */
     public Helper() {
+        // This is default constructor.
+        // Further implementations can be done in this constructor.
     }
 
     /**

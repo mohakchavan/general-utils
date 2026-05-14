@@ -9,6 +9,8 @@ public class MainMenu {
      * Default constructor to create an object.
      */
     public MainMenu() {
+        // This is default constructor.
+        // Further implementations can be done in this constructor.
     }
 
     /**

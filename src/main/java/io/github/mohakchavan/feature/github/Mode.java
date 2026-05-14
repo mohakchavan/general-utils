@@ -4,9 +4,9 @@ public enum Mode {
     TEXT(1),
     FILE(2);
 
-    private final int mode;
+    private final int modeValue;
 
-    Mode(int mode) {
-        this.mode = mode;
+    Mode(int modeValue) {
+        this.modeValue = modeValue;
     }
 }

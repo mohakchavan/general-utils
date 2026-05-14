@@ -16,6 +16,8 @@ public class GeneralUtils {
      * Default constructor to create an object.
      */
     public GeneralUtils() {
+        // This is default constructor.
+        // Further implementations can be done in this constructor.
     }
 
     private static final Logger log = LoggerFactory.getLogger(GeneralUtils.class);

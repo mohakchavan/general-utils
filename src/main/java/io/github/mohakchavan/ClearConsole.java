@@ -12,6 +12,8 @@ public class ClearConsole {
      * Default constructor for {@link ClearConsole}.
      */
     public ClearConsole() {
+        // This is default constructor.
+        // Further implementations can be done in this constructor.
     }
 
     /**

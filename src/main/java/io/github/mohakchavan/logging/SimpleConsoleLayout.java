@@ -13,6 +13,8 @@ public class SimpleConsoleLayout extends LayoutBase<ILoggingEvent> {
      * Default constructor to create an object.
      */
     public SimpleConsoleLayout() {
+        // This is default constructor.
+        // Further implementations can be done in this constructor.
     }
 
     @Override
