@@ -91,6 +91,7 @@
             </properties>
             <build>
                 <plugins>
+
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
@@ -102,6 +103,7 @@
                             </compilerArgs>
                         </configuration>
                     </plugin>
+
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
@@ -114,6 +116,7 @@
                             </execution>
                         </executions>
                     </plugin>
+
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
@@ -129,6 +132,7 @@
                             <failOnWarnings>true</failOnWarnings>
                         </configuration>
                     </plugin>
+
                     <!--<plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
@@ -148,6 +152,7 @@
                             </execution>
                         </executions>
                     </plugin>-->
+
                 </plugins>
             </build>
         </profile>
@@ -172,6 +177,15 @@
         </resources>
 
         <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <propertiesEncoding>${project.build.sourceEncoding}</propertiesEncoding>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -201,7 +215,7 @@
                             <!--<minimizeJar>true</minimizeJar>--> <!-- DO NOT MINIMIZE. -->
                             <!--<finalName>mainAll</finalName>-->
                             <shadedArtifactAttached>true</shadedArtifactAttached>
-                            <shadedClassifierName>shaded</shadedClassifierName>
+                            <shadedClassifierName>shaded-unsigned</shadedClassifierName>
                         </configuration>
                     </execution>
                 </executions>

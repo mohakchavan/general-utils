@@ -44,14 +44,14 @@ the log file already exists.
 ```text
 2026-04-28T11:04:04.595+0000 [main] DEBUG io.github.mohakchavan.GeneralUtils -- activeProfile: release
 2026-04-28T11:10:45.805+0000 [main] DEBUG io.github.mohakchavan.GeneralUtils -- activeProfile: release
-2026-04-28T11:11:05.155+0000 [main] ERROR io.github.mohakchavan.GithubFeature -- Invalid Base64 public key. Stacktrace: 
+2026-04-28T11:11:05.155+0000 [main] ERROR io.github.mohakchavan.feature.github.GithubFeature -- Invalid Base64 public key. Stacktrace: 
 java.lang.IllegalArgumentException: Last unit does not have enough valid bits
 	at java.base/java.util.Base64$Decoder.decode0(Base64.java:872)
 	at java.base/java.util.Base64$Decoder.decode(Base64.java:570)
 	at java.base/java.util.Base64$Decoder.decode(Base64.java:593)
-	at io.github.mohakchavan.GithubFeature.decodePublicKey(GithubFeature.java:94)
-	at io.github.mohakchavan.GithubFeature.encryptSecretWithKey(GithubFeature.java:72)
-	at io.github.mohakchavan.GithubFeature.startGithubFeature(GithubFeature.java:45)
+	at io.github.mohakchavan.feature.github.GithubFeature.decodePublicKey(GithubFeature.java:94)
+	at io.github.mohakchavan.feature.github.GithubFeature.encryptSecretWithKey(GithubFeature.java:72)
+	at io.github.mohakchavan.feature.github.GithubFeature.startGithubFeature(GithubFeature.java:45)
 	at io.github.mohakchavan.GeneralUtils.parseFeatureNumber(GeneralUtils.java:80)
 	at io.github.mohakchavan.GeneralUtils.main(GeneralUtils.java:49)
 2026-04-28T11:25:05.766+0000 [main] DEBUG io.github.mohakchavan.GeneralUtils -- activeProfile: release

@@ -1,3 +1,6 @@
+# This workflow file is used only for testing of workflows.
+#
+# DO NOT SUBMIT CHANGES FOR THIS FILE.
 name: Test Deploy
 
 on:
@@ -7,13 +10,14 @@ jobs:
 
   test-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
     steps:
 
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            pom.xml
 
       - name: Setup Java
         uses: actions/setup-java@v5
@@ -24,13 +28,10 @@ jobs:
 
       - name: Show Settings
         run: |
-          cat ~/.m2/settings.xml
+          echo "Hello World."
 
       - name: Build
-        env:
-          GITHUB_TOKEN: ${{github.token}}
+        shell: sh
         run: |
-          ls -als
-          chmod +x mvnw
-          ./mvnw clean deploy
+          echo "Hello World 2."
 

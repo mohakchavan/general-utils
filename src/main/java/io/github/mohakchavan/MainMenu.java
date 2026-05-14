@@ -9,6 +9,8 @@ public class MainMenu {
      * Default constructor to create an object.
      */
     public MainMenu() {
+        // This is default constructor.
+        // Further implementations can be done in this constructor.
     }
 
     /**
@@ -17,7 +19,8 @@ public class MainMenu {
     public void showMainMenu() {
 
         ConsoleInputOutput.write("\nBelow are the features and their respective numbers");
-        ConsoleInputOutput.write("1 -> GitHub Secret Encoder for GitHub REST API.");
+        ConsoleInputOutput.write("1 -> GitHub Secret Text Encoder for GitHub REST API.");
+        ConsoleInputOutput.write("2 -> GitHub Secret File Encoder for GitHub REST API.");
         ConsoleInputOutput.write("-1 -> Exit.");
 
         ConsoleInputOutput.write("\nEnter single feature number:");
