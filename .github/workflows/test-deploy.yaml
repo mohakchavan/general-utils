@@ -1,3 +1,6 @@
+# This workflow file is used only for testing of workflows.
+#
+# DO NOT SUBMIT CHANGES FOR THIS FILE.
 name: Test Deploy
 
 on:
