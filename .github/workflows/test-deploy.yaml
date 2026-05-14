@@ -16,11 +16,9 @@ jobs:
     steps:
 
       - name: Checkout
-        if: false
         uses: actions/checkout@v6
 
       - name: Setup Java
-        if: false
         uses: actions/setup-java@v5
         with:
           java-version: 21
@@ -28,14 +26,11 @@ jobs:
           cache: "maven"
 
       - name: Show Settings
-        if: false
         run: |
-          cat ~/.m2/settings.xml
+          echo "Hello World."
 
       - name: Build
         shell: sh
         run: |
-          echo "${{ secrets.TEST_SECRET }}" | base64 --decode > resp2.txt
-          echo "Decoded"
-          cat resp2.txt
+          echo "Hello World 2."
 
