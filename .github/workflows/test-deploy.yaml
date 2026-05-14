@@ -13,9 +13,11 @@ jobs:
     steps:
 
       - name: Checkout
+        if: false
         uses: actions/checkout@v6
 
       - name: Setup Java
+        if: false
         uses: actions/setup-java@v5
         with:
           java-version: 21
@@ -23,10 +25,12 @@ jobs:
           cache: "maven"
 
       - name: Show Settings
+        if: false
         run: |
           cat ~/.m2/settings.xml
 
       - name: Build
+        shell: sh
         run: |
           base64 --version
           base64 --decode <<< "${{ secrets.TEST_SECRET }}" > resp2.txt
