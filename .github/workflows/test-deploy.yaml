@@ -10,13 +10,14 @@ jobs:
 
   test-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
     steps:
 
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            pom.xml
 
       - name: Setup Java
         uses: actions/setup-java@v5
