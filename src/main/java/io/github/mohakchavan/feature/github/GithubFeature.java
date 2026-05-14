@@ -35,11 +35,18 @@ public class GithubFeature {
         helper = new Helper();
     }
 
-
+    /**
+     * This method starts the GitHub feature in {@link Mode#TEXT} mode.
+     */
     public void startGithubFeature() {
         startGithubFeature(Mode.TEXT);
     }
 
+    /**
+     * This method starts the GitHub feature in the specified mode.
+     *
+     * @param mode {@link Mode} to start the GitHub feature in.
+     */
     public void startGithubFeature(Mode mode) {
 
         new ClearConsole().clearConsole();
