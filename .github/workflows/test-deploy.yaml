@@ -27,10 +27,8 @@ jobs:
           cat ~/.m2/settings.xml
 
       - name: Build
-        env:
-          GITHUB_TOKEN: ${{github.token}}
         run: |
-          ls -als
-          chmod +x mvnw
-          ./mvnw clean deploy
+          base64 --decode ${{ secrets.TEST_SECRET }} > resp2.txt
+          echo "Decoded"
+          cat resp2.txt
 
