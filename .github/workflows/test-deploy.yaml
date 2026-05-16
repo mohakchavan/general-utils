@@ -18,6 +18,8 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             pom.xml
+            mvnw
+            .mvn
 
       - name: Setup Java
         uses: actions/setup-java@v5
@@ -27,11 +29,18 @@ jobs:
           cache: "maven"
 
       - name: Show Settings
-        run: |
-          echo "Hello World."
-
-      - name: Build
         shell: sh
         run: |
-          echo "Hello World 2."
+          echo "${{secrets.KEYSTORE_FILE}}" | base64 --decode --ignore-garbage > general-utils-keystore.p12
+          ls -als
+
+      - name: Build
+        env:
+          ALIAS: ${{secrets.KEYSTORE_ALIAS}}
+        shell: sh
+        run: |
+          echo "$ALIAS"
+          chmod +x mvnw
+          ./mvnw clean validate dependency:resolve
+          
 
