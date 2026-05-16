@@ -41,6 +41,7 @@ jobs:
         shell: sh
         run: |
           echo "$ALIAS"
+          echo "::add-mask::Alias"
           chmod +x mvnw
           ./mvnw clean validate dependency:resolve
           
