@@ -33,7 +33,7 @@ jobs:
         run: |
           echo "${{secrets.KEYSTORE_FILE}}" | base64 --decode --ignore-garbage > general-utils-keystore.p12
           ls -als
-          ls -als .mvn
+          echo "::add-mask::Alias"
 
       - name: Build
         env:
@@ -41,7 +41,6 @@ jobs:
         shell: sh
         run: |
           echo "$ALIAS"
-          echo "::add-mask::Alias"
           chmod +x mvnw
           ./mvnw clean validate dependency:resolve
           
