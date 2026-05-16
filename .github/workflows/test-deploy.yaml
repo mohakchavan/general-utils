@@ -33,6 +33,7 @@ jobs:
         run: |
           echo "${{secrets.KEYSTORE_FILE}}" | base64 --decode --ignore-garbage > general-utils-keystore.p12
           ls -als
+          ls -als .mvn
 
       - name: Build
         env:
