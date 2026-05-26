@@ -14,12 +14,6 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v6
-        with:
-          sparse-checkout-cone-mode: false
-          sparse-checkout: |
-            pom.xml
-            mvnw
-            .mvn
 
       - name: Setup Java
         uses: actions/setup-java@v5
@@ -33,7 +27,6 @@ jobs:
         run: |
           echo "${{secrets.KEYSTORE_FILE}}" | base64 --decode --ignore-garbage > general-utils-keystore.p12
           ls -als
-          ls -als ./.mvn/wrapper
 
       - name: Build
         env:
@@ -43,8 +36,7 @@ jobs:
           KEYSTORE_KEY_PASS: ${{secrets.KEYSTORE_KEY_PASS}}
         shell: sh
         run: |
-          cat ~/.m2/settings.xml
           chmod +x mvnw
-          ./mvnw clean validate dependency:resolve
+          ./mvnw clean verify --activate-profiles !dev,prod,release
           
 

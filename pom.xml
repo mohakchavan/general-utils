@@ -177,6 +177,7 @@
                             <storepass>${env.KEYSTORE_STORE_PASS}</storepass>
                             <keypass>${env.KEYSTORE_KEY_PASS}</keypass>
                             <removeExistingSignatures>true</removeExistingSignatures>
+                            <verbose>true</verbose>
                         </configuration>
                     </plugin>
 
