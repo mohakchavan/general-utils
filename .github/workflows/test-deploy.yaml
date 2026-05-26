@@ -27,8 +27,10 @@ jobs:
         run: |
           echo "${{secrets.KEYSTORE_FILE}}" | base64 --decode --ignore-garbage > general-utils-keystore.p12
           ls -als
+          gpg --list-secret-keys --keyid-format=long
 
       - name: Build
+        if: false
         env:
           KEYSTORE_FILE: general-utils-keystore.p12
           KEYSTORE_ALIAS: ${{secrets.KEYSTORE_ALIAS}}
@@ -41,6 +43,7 @@ jobs:
           ls -als target
 
       - name: Upload Files
+        if: false
         uses: actions/upload-artifact@v7
         with:
           name: jar-files
