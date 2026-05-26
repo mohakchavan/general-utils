@@ -61,17 +61,6 @@
                 <logging.fileLogging.file>./${project.name}-logs.txt</logging.fileLogging.file>
                 <profile.suffix>-${activeProfile}</profile.suffix>
             </properties>
-        </profile>
-
-        <profile>
-            <id>release</id>
-            <properties>
-                <activeProfile>release</activeProfile>
-                <logging.defaultLogLevel>debug</logging.defaultLogLevel>
-                <logging.fileLogging.enabled>true</logging.fileLogging.enabled>
-                <logging.fileLogging.file>./${project.name}-logs.txt</logging.fileLogging.file>
-                <!--<profile.suffix>-${activeProfile}</profile.suffix>-->
-            </properties>
             <build>
                 <plugins>
 
@@ -115,6 +104,22 @@
                             <failOnWarnings>true</failOnWarnings>
                         </configuration>
                     </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>release</id>
+            <properties>
+                <activeProfile>release</activeProfile>
+                <logging.defaultLogLevel>debug</logging.defaultLogLevel>
+                <logging.fileLogging.enabled>true</logging.fileLogging.enabled>
+                <logging.fileLogging.file>./${project.name}-logs.txt</logging.fileLogging.file>
+                <profile.suffix/>
+            </properties>
+            <build>
+                <plugins>
 
                     <!--<plugin>
                         <groupId>org.apache.maven.plugins</groupId>
