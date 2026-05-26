@@ -33,14 +33,17 @@ jobs:
         run: |
           echo "${{secrets.KEYSTORE_FILE}}" | base64 --decode --ignore-garbage > general-utils-keystore.p12
           ls -als
-          echo "::add-mask::Alias"
+          ls -als ./mvn/wrapper
 
       - name: Build
         env:
-          ALIAS: ${{secrets.KEYSTORE_ALIAS}}
+          KEYSTORE_FILE: general-utils-keystore.p12
+          KEYSTORE_ALIAS: ${{secrets.KEYSTORE_ALIAS}}
+          KEYSTORE_STORE_PASS: ${{secrets.KEYSTORE_STORE_PASS}}
+          KEYSTORE_KEY_PASS: ${{secrets.KEYSTORE_KEY_PASS}}
         shell: sh
         run: |
-          echo "$ALIAS"
+          cat ~/.m2/settings.xml
           chmod +x mvnw
           ./mvnw clean validate dependency:resolve
           
