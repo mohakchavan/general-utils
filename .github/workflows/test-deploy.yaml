@@ -38,5 +38,15 @@ jobs:
         run: |
           chmod +x mvnw
           ./mvnw clean verify --activate-profiles !dev,prod,release
+          ls -als target
+
+      - name: Upload Files
+        uses: actions/upload-artifact@v7
+        with:
+          name: jar-files
+          path: |
+            ./target/*.jar
+          retention-days: 1
+          compression-level: 9
           
 
