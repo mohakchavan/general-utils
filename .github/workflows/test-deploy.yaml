@@ -33,7 +33,7 @@ jobs:
         run: |
           echo "${{secrets.KEYSTORE_FILE}}" | base64 --decode --ignore-garbage > general-utils-keystore.p12
           ls -als
-          ls -als ./mvn/wrapper
+          ls -als ./.mvn/wrapper
 
       - name: Build
         env:
