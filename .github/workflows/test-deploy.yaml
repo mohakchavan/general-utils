@@ -13,7 +13,6 @@ jobs:
     environment:
       name: release
       url: https://github.com
-      deployment: false
     steps:
 
       - name: Checkout
