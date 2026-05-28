@@ -116,12 +116,13 @@
                 <logging.defaultLogLevel>debug</logging.defaultLogLevel>
                 <logging.fileLogging.enabled>true</logging.fileLogging.enabled>
                 <logging.fileLogging.file>./${project.name}-logs.txt</logging.fileLogging.file>
-                <profile.suffix/>
+                <profile.suffix>-${activeProfile}</profile.suffix>
+<!--                <profile.suffix/>-->
             </properties>
             <build>
                 <plugins>
 
-                    <!--<plugin>
+                    <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
                         <executions>
@@ -132,14 +133,20 @@
                                     <goal>sign</goal>
                                 </goals>
                                 <configuration>
+                                    <signer>gpg</signer>
+                                    <bestPractices>true</bestPractices>
+                                    <ascDirectory>${project.build.directory}</ascDirectory>
+                                    <keyname>${env.SIGNING_GPG_KEY_ID}</keyname>
+                                    <passphraseEnvName>SIGNING_GPG_KEY_PASS</passphraseEnvName>
                                     <gpgArguments>
-                                        <gpgArgument>&#45;&#45;pinentry-mode</gpgArgument>
-                                        <gpgArgument>loopback</gpgArgument>
+<!--                                        <gpgArgument>&#45;&#45;pinentry-mode</gpgArgument>-->
+                                        <!--<gpgArgument>loopback</gpgArgument>-->
+                                        <gpgArgument>--verbose</gpgArgument>
                                     </gpgArguments>
                                 </configuration>
                             </execution>
                         </executions>
-                    </plugin>-->
+                    </plugin>
 
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -147,12 +154,13 @@
                         <executions>
                             <execution>
                                 <id>sign</id>
+                                <phase>package</phase>
                                 <goals>
                                     <goal>sign</goal>
                                 </goals>
                                 <configuration>
                                     <archive>
-                                        ${project.build.directory}/shaded/${custom.finalName}-shaded-unsigned.jar
+                                        ${project.build.directory}/${custom.finalName}-shaded.jar
                                     </archive>
                                     <arguments>
                                         <argument>-signedjar</argument>
@@ -163,6 +171,7 @@
                             </execution>
                             <execution>
                                 <id>verify</id>
+                                <phase>verify</phase>
                                 <goals>
                                     <goal>verify</goal>
                                 </goals>
@@ -268,9 +277,10 @@
                             </filters>
                             <!--<minimizeJar>true</minimizeJar>--> <!-- DO NOT MINIMIZE. -->
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <finalName>${custom.finalName}-shaded-unsigned</finalName>
+                            <finalName>${custom.finalName}-shaded</finalName>
                             <shadedArtifactAttached>true</shadedArtifactAttached>
-                            <outputDirectory>${project.build.directory}/shaded</outputDirectory>
+                            <shadedClassifierName>s</shadedClassifierName>
+                            <!--<outputDirectory>${project.build.directory}/shaded</outputDirectory>-->
                         </configuration>
                     </execution>
                 </executions>
