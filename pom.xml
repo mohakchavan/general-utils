@@ -116,8 +116,8 @@
                 <logging.defaultLogLevel>debug</logging.defaultLogLevel>
                 <logging.fileLogging.enabled>true</logging.fileLogging.enabled>
                 <logging.fileLogging.file>./${project.name}-logs.txt</logging.fileLogging.file>
-                <profile.suffix>-${activeProfile}</profile.suffix>
-<!--                <profile.suffix/>-->
+                <!--<profile.suffix>-${activeProfile}</profile.suffix>-->
+                <profile.suffix/>
             </properties>
             <build>
                 <plugins>
@@ -138,11 +138,6 @@
                                     <ascDirectory>${project.build.directory}</ascDirectory>
                                     <keyname>${env.SIGNING_GPG_KEY_ID}</keyname>
                                     <passphraseEnvName>SIGNING_GPG_KEY_PASS</passphraseEnvName>
-                                    <gpgArguments>
-<!--                                        <gpgArgument>&#45;&#45;pinentry-mode</gpgArgument>-->
-                                        <!--<gpgArgument>loopback</gpgArgument>-->
-                                        <gpgArgument>--verbose</gpgArgument>
-                                    </gpgArguments>
                                 </configuration>
                             </execution>
                         </executions>
