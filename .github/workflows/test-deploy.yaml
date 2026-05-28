@@ -34,12 +34,13 @@ jobs:
           gpg --list-secret-keys --keyid-format=long
 
       - name: Build
-        if: false
         env:
           KEYSTORE_FILE: general-utils-keystore.p12
           KEYSTORE_ALIAS: ${{secrets.KEYSTORE_ALIAS}}
           KEYSTORE_STORE_PASS: ${{secrets.KEYSTORE_STORE_PASS}}
           KEYSTORE_KEY_PASS: ${{secrets.KEYSTORE_KEY_PASS}}
+          SIGNING_GPG_KEY_ID: ${{vars.SIGNING_GPG_KEY_ID}}
+          SIGNING_GPG_KEY_PASS: ${{secrets.SIGNING_GPG_KEY_PASS}}
         shell: sh
         run: |
           chmod +x mvnw
@@ -47,7 +48,6 @@ jobs:
           ls -als target
 
       - name: Upload Files
-        if: false
         uses: actions/upload-artifact@v7
         with:
           name: jar-files
