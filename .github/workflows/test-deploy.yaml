@@ -24,6 +24,7 @@ jobs:
           java-version: 21
           distribution: "temurin"
           cache: "maven"
+          gpg-private-key: ${{secrets.SIGNING_GPG_KEY}}
 
       - name: Show Settings
         shell: sh
@@ -33,6 +34,7 @@ jobs:
           gpg --list-secret-keys --keyid-format=long
 
       - name: Build
+        if: false
         env:
           KEYSTORE_FILE: general-utils-keystore.p12
           KEYSTORE_ALIAS: ${{secrets.KEYSTORE_ALIAS}}
