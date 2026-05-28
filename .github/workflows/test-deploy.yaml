@@ -53,6 +53,8 @@ jobs:
           name: jar-files
           path: |
             ./target/*.jar
+            ./target/*.asc
+            ./target/*.pom
           retention-days: 1
           compression-level: 9
           
