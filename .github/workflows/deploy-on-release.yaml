@@ -13,23 +13,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Run on Dispatch
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          java-version: 21
+          distribution: "temurin"
+          cache: "maven"
+
+      - name: Build
         shell: sh
         run: |
-          echo "Running on dispatch."
+          chmod +x mvnw
+          ./mvnw clean package --activate-profiles !dev,prod
 
   build-jar-release:
     if: ${{ github.event_name == 'release' }}
-    runs-on: ubuntu-latest
-    steps:
-
-      - name: Run on Release
-        shell: sh
-        run: |
-          echo "Running on Release."
-
-  build-jar:
-    if: false
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -48,27 +49,6 @@ jobs:
           distribution: "temurin"
           cache: "maven"
           gpg-private-key: ${{secrets.SIGNING_GPG_KEY}}
-
-      - name: Set run mode
-        id: set-run-mode
-        shell: sh
-        run: |
-          if [ "${{github.event_name}}" = "workflow_dispatch" ]; then
-            echo "Workflow is run manually."
-            echo "run-mode=1" >> $GITHUB_OUTPUT
-
-          elif [ "${{github.event_name}}" = "release" ]; then
-            echo "Workflow is run on pull request event."
-            echo "run-mode=2" >> $GITHUB_OUTPUT
-
-          fi
-
-      - name: Build
-        if: ${{ steps.set-run-mode.outputs.run-mode == 1 }}
-        shell: sh
-        run: |
-          chmod +x mvnw
-          ./mvnw clean package --activate-profiles !dev,prod
 
       - name: Decode Keystore
         if: ${{ steps.set-run-mode.outputs.run-mode == 2 }}
@@ -90,29 +70,28 @@ jobs:
           chmod +x mvnw
           ./mvnw clean verify --activate-profiles !dev,prod,release
 
+      - name: Checksums
+        shell: sh
+        run: |
+          sh .github/scripts/create-checksum.sh
+          ls -als target
+
       - name: Upload Release Assets
         run: |
-          if [[ "${{github.event_name}}" == "workflow_dispatch" ]]; then
-            echo "Workflow is run manually. No need to upload release assests."
+          echo "Release Action: ${{github.event.action}}"
+          echo "Release ID: ${{github.event.release.id}}"
           
-          elif [[ "${{github.event_name}}" == "release" ]]; then
-            echo "Workflow is run on release event. Upload to release assets."
-            echo "Release Action: ${{github.event.action}}"
-            echo "Release ID: ${{github.event.release.id}}"
-            
-            echo "=======Calling Release Info======="
-            curl --location --request GET "https://api.github.com/repos/${{github.repository}}/releases/${{github.event.release.id}}"\
-              --verbose --output resp.txt
-            
-            cleanUrl=$(jq -r ".upload_url" resp.txt | { read url; echo "${url%\{*}"; })
-            echo "=======Uploading JAR Asset======="
-            for file in ./target/*.jar; do
-              echo
-              echo "=======Uploading $file file======="
-              curl --location --request POST --header "Authorization: Bearer ${{github.token}}" \
-                --header "Content-Type: application/java-archive" "$cleanUrl?name=${file##*/}" \
-                  --data-binary "@$file" --verbose
-            done
-            
-          fi
+          echo "=======Calling Release Info======="
+          curl --location --request GET "https://api.github.com/repos/${{github.repository}}/releases/${{github.event.release.id}}"\
+            --verbose --output resp.txt
           
+          cleanUrl=$(jq -r ".upload_url" resp.txt | { read url; echo "${url%\{*}"; })
+          echo "=======Uploading JAR Asset======="
+          for file in ./target/*.jar ./target/*.pom ./target/*.md5 ./target/*.sha*; do
+            echo
+            echo "=======Uploading $file file======="
+            curl --location --request POST --header "Authorization: Bearer ${{github.token}}" \
+              --header "Content-Type: application/java-archive" "$cleanUrl?name=${file##*/}" \
+                --data-binary "@$file" --verbose
+          done
+            

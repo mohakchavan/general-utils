@@ -12,6 +12,5 @@ checksums() {
   done
 }
 
-checksums "./target/*.jar"
-checksums "./target/*.pom"
+checksums "./target/*.jar ./target/*.pom"
 
