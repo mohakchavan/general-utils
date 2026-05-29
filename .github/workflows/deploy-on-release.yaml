@@ -9,7 +9,7 @@ on:
 jobs:
 
   build-jar-dispatch:
-    if: ( ${{github.event_name}} == "workflow_dispatch" )
+    if: ${{ github.event_name == "workflow_dispatch" }}
     runs-on: ubuntu-latest
     steps:
 
@@ -19,7 +19,7 @@ jobs:
           echo "Running on dispatch."
 
   build-jar-release:
-    if: ( ${{github.event_name}} == "release" )
+    if: ${{ github.event_name == "release" }}
     runs-on: ubuntu-latest
     steps:
 
