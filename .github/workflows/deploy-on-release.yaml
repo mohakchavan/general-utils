@@ -8,10 +8,34 @@ on:
 
 jobs:
 
+  build-jar-dispatch:
+    if: ( ${{github.event_name}} == "workflow_dispatch" )
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Run on Dispatch
+        shell: sh
+        run: |
+          echo "Running on dispatch."
+
+  build-jar-release:
+    if: ( ${{github.event_name}} == "release" )
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Run on Release
+        shell: sh
+        run: |
+          echo "Running on Release."
+
   build-jar:
+    if: false
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    environment:
+      name: release
+      deployment: false
     steps:
 
       - name: Checkout
@@ -23,13 +47,50 @@ jobs:
           java-version: 21
           distribution: "temurin"
           cache: "maven"
+          gpg-private-key: ${{secrets.SIGNING_GPG_KEY}}
+
+      - name: Set run mode
+        id: set-run-mode
+        shell: sh
+        run: |
+          if [ "${{github.event_name}}" = "workflow_dispatch" ]; then
+            echo "Workflow is run manually."
+            echo "run-mode=1" >> $GITHUB_OUTPUT
+
+          elif [ "${{github.event_name}}" = "release" ]; then
+            echo "Workflow is run on pull request event."
+            echo "run-mode=2" >> $GITHUB_OUTPUT
+
+          fi
 
       - name: Build
+        if: ${{ steps.set-run-mode.outputs.run-mode == 1 }}
+        shell: sh
         run: |
           chmod +x mvnw
-          ./mvnw clean package --activate-profiles release,!dev
+          ./mvnw clean package --activate-profiles !dev,prod
 
-      - name: Upload
+      - name: Decode Keystore
+        if: ${{ steps.set-run-mode.outputs.run-mode == 2 }}
+        shell: sh
+        run: |
+          echo "${{secrets.KEYSTORE_FILE}}" | base64 --decode --ignore-garbage > general-utils-keystore.p12
+
+      - name: Build Release
+        if: ${{ steps.set-run-mode.outputs.run-mode == 2 }}
+        shell: sh
+        env:
+          KEYSTORE_FILE: general-utils-keystore.p12
+          KEYSTORE_ALIAS: ${{secrets.KEYSTORE_ALIAS}}
+          KEYSTORE_STORE_PASS: ${{secrets.KEYSTORE_STORE_PASS}}
+          KEYSTORE_KEY_PASS: ${{secrets.KEYSTORE_KEY_PASS}}
+          SIGNING_GPG_KEY_ID: ${{vars.SIGNING_GPG_KEY_ID}}
+          SIGNING_GPG_KEY_PASS: ${{secrets.SIGNING_GPG_KEY_PASS}}
+        run: |
+          chmod +x mvnw
+          ./mvnw clean verify --activate-profiles !dev,prod,release
+
+      - name: Upload Release Assets
         run: |
           if [[ "${{github.event_name}}" == "workflow_dispatch" ]]; then
             echo "Workflow is run manually. No need to upload release assests."
