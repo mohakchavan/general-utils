@@ -52,7 +52,6 @@ jobs:
         shell: sh
         run: |
           sh .github/scripts/create-checksum.sh
-          ls -als target
 
       - name: Upload Release Assets
         shell: sh
@@ -60,16 +59,16 @@ jobs:
           echo "Release Action: ${{github.event.action}}"
           echo "Release ID: ${{github.event.release.id}}"
           
-          echo "::group::=======Calling Release Info======="
+          echo "::group::Calling Release Info"
           curl --location --request GET "https://api.github.com/repos/${{github.repository}}/releases/${{github.event.release.id}}"\
             --verbose --output resp.txt
           echo "::endgroup::"
           
           cleanUrl=$(jq -r ".upload_url" resp.txt | { read url; echo "${url%\{*}"; })
-          echo "=======Uploading Release Assets======="
+          echo "Uploading Release Assets"
           for file in ./target/*.jar ./target/*.pom ./target/*.asc ./target/*.md5 ./target/*.sha*; do
             echo
-            echo "::group::=======Uploading $file file======="
+            echo "::group::Uploading $file file"
             curl --location --request POST --header "Authorization: Bearer ${{github.token}}" \
               --header "Content-Type: application/java-archive" "$cleanUrl?name=${file##*/}" \
                 --data-binary "@$file" --verbose
