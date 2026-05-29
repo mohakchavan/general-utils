@@ -51,13 +51,11 @@ jobs:
           gpg-private-key: ${{secrets.SIGNING_GPG_KEY}}
 
       - name: Decode Keystore
-        if: ${{ steps.set-run-mode.outputs.run-mode == 2 }}
         shell: sh
         run: |
           echo "${{secrets.KEYSTORE_FILE}}" | base64 --decode --ignore-garbage > general-utils-keystore.p12
 
       - name: Build Release
-        if: ${{ steps.set-run-mode.outputs.run-mode == 2 }}
         shell: sh
         env:
           KEYSTORE_FILE: general-utils-keystore.p12
@@ -77,6 +75,7 @@ jobs:
           ls -als target
 
       - name: Upload Release Assets
+        shell: sh
         run: |
           echo "Release Action: ${{github.event.action}}"
           echo "Release ID: ${{github.event.release.id}}"
