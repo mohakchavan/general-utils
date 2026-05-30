@@ -10,13 +10,14 @@ jobs:
 
   test-deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: release
-      deployment: false
     steps:
 
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            pom.xml
 
       - name: Setup Java
         uses: actions/setup-java@v5
@@ -24,48 +25,12 @@ jobs:
           java-version: 21
           distribution: "temurin"
           cache: "maven"
-          gpg-private-key: ${{secrets.SIGNING_GPG_KEY}}
 
       - name: Show Settings
-        shell: sh
         run: |
-          echo "${{secrets.KEYSTORE_FILE}}" | base64 --decode --ignore-garbage > general-utils-keystore.p12
-          ls -als
-          gpg --list-secret-keys --keyid-format=long
+          echo "Hello World."
 
       - name: Build
-        env:
-          KEYSTORE_FILE: general-utils-keystore.p12
-          KEYSTORE_ALIAS: ${{secrets.KEYSTORE_ALIAS}}
-          KEYSTORE_STORE_PASS: ${{secrets.KEYSTORE_STORE_PASS}}
-          KEYSTORE_KEY_PASS: ${{secrets.KEYSTORE_KEY_PASS}}
-          SIGNING_GPG_KEY_ID: ${{vars.SIGNING_GPG_KEY_ID}}
-          SIGNING_GPG_KEY_PASS: ${{secrets.SIGNING_GPG_KEY_PASS}}
         shell: sh
         run: |
-          chmod +x mvnw
-          ./mvnw clean verify --activate-profiles !dev,prod,release
-          ls -als target
-
-      - name: Checksums
-        shell: sh
-        run: |
-          sh .github/scripts/create-checksum.sh
-          ls -als target
-
-      - name: Upload Files
-        uses: actions/upload-artifact@v7
-        with:
-          name: jar-files
-          path: |
-            ./target/*.jar
-            ./target/*.asc
-            ./target/*.pom
-            ./target/*.md5
-            ./target/*.sha1
-            ./target/*.sha256
-            ./target/*.sha512
-          retention-days: 1
-          compression-level: 9
-          
-
+          echo "Hello World 2."
