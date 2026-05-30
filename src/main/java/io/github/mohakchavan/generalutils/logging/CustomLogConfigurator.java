@@ -1,4 +1,4 @@
-package io.github.mohakchavan.logging;
+package io.github.mohakchavan.generalutils.logging;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
@@ -12,7 +12,7 @@ import ch.qos.logback.core.ConsoleAppender;
 import ch.qos.logback.core.FileAppender;
 import ch.qos.logback.core.LayoutBase;
 import ch.qos.logback.core.encoder.LayoutWrappingEncoder;
-import io.github.mohakchavan.Helper;
+import io.github.mohakchavan.generalutils.Helper;
 
 /**
  * Custom Configurator Class for logging.
@@ -46,7 +46,7 @@ public class CustomLogConfigurator extends TylerConfiguratorBase implements Conf
             devLogAppender = setConsoleAppender(loggerContext, true);
         }
 
-        Logger interactionLogger = setupLogger("io.github.mohakchavan.ConsoleInputOutput", Level.TRACE, false);
+        Logger interactionLogger = setupLogger("io.github.mohakchavan.generalutils.ConsoleInputOutput", Level.TRACE, false);
         interactionLogger.addAppender(interactionAppender);
 
         String defaultLogLevel = subst("${customLogging.defaultLogLevel}");

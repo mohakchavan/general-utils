@@ -1,4 +1,4 @@
-package io.github.mohakchavan.feature.github;
+package io.github.mohakchavan.generalutils.feature.github;
 
 import com.goterl.lazysodium.LazySodiumJava;
 import com.goterl.lazysodium.SodiumJava;
@@ -6,10 +6,10 @@ import com.goterl.lazysodium.exceptions.SodiumException;
 import com.goterl.lazysodium.utils.Base64MessageEncoder;
 import com.goterl.lazysodium.utils.Key;
 import com.goterl.lazysodium.utils.LibraryLoader;
-import io.github.mohakchavan.ClearConsole;
-import io.github.mohakchavan.ConsoleInputOutput;
-import io.github.mohakchavan.ExitException;
-import io.github.mohakchavan.Helper;
+import io.github.mohakchavan.generalutils.ClearConsole;
+import io.github.mohakchavan.generalutils.ConsoleInputOutput;
+import io.github.mohakchavan.generalutils.ExitException;
+import io.github.mohakchavan.generalutils.Helper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

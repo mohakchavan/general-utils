@@ -1,4 +1,4 @@
-package io.github.mohakchavan;
+package io.github.mohakchavan.generalutils;
 
 /**
  * This is a utility class.
