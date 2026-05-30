@@ -1,4 +1,4 @@
-package io.github.mohakchavan;
+package io.github.mohakchavan.generalutils;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

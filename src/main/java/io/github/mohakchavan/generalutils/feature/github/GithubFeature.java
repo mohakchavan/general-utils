@@ -1,4 +1,4 @@
-package io.github.mohakchavan.feature.github;
+package io.github.mohakchavan.generalutils.feature.github;
 
 import com.goterl.lazysodium.LazySodiumJava;
 import com.goterl.lazysodium.SodiumJava;
@@ -6,10 +6,10 @@ import com.goterl.lazysodium.exceptions.SodiumException;
 import com.goterl.lazysodium.utils.Base64MessageEncoder;
 import com.goterl.lazysodium.utils.Key;
 import com.goterl.lazysodium.utils.LibraryLoader;
-import io.github.mohakchavan.ClearConsole;
-import io.github.mohakchavan.ConsoleInputOutput;
-import io.github.mohakchavan.ExitException;
-import io.github.mohakchavan.Helper;
+import io.github.mohakchavan.generalutils.ClearConsole;
+import io.github.mohakchavan.generalutils.ConsoleInputOutput;
+import io.github.mohakchavan.generalutils.ExitException;
+import io.github.mohakchavan.generalutils.Helper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -95,14 +95,14 @@ public class GithubFeature {
     }
 
     private String acquireSecret() {
-        ConsoleInputOutput.write("\nEnter Secret Value:");
+        ConsoleInputOutput.write("\nEnter Secret Value (single line only):");
         String secret = scanner.nextLine();
         secret = secret.trim();
         return secret;
     }
 
     private String acquireFileSecret() {
-        ConsoleInputOutput.write("\nEnter file-path including the file to be encrypted:");
+        ConsoleInputOutput.write("\nEnter full file-path including the file to be encrypted:");
         String filePath = scanner.nextLine();
         if (helper.isStringEmpty(filePath)) {
             ConsoleInputOutput.write("Path of the file cannot be null or empty.");
@@ -126,7 +126,19 @@ public class GithubFeature {
             throw new ExitException();
         }
         byte[] fileBytes = readBytesFromFile(file);
-        return Base64.getEncoder().encodeToString(fileBytes);
+        ConsoleInputOutput.write("File reading completed.");
+
+        return convertContentsInputBased(fileBytes);
+    }
+
+    private String convertContentsInputBased(byte[] fileBytes) {
+        ConsoleInputOutput.write("\nConvert file contents to Base64, if not already converted ? " +
+                "If selected y, remember to first decode from Base64 before using." +
+                "\nDefault y, (y/N):");
+        String input = scanner.nextLine();
+        boolean convert = helper.isStringEmpty(input) ||
+                (!"no".equalsIgnoreCase(input) && !"n".equalsIgnoreCase(input));
+        return convert ? Base64.getEncoder().encodeToString(fileBytes) : new String(fileBytes);
     }
 
     private byte[] readBytesFromFile(File fileToRead) {

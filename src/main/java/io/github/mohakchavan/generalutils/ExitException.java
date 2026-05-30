@@ -1,4 +1,4 @@
-package io.github.mohakchavan;
+package io.github.mohakchavan.generalutils;
 
 import java.io.Serial;
 

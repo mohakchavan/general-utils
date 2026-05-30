@@ -1,7 +1,7 @@
-package io.github.mohakchavan;
+package io.github.mohakchavan.generalutils;
 
-import io.github.mohakchavan.feature.github.GithubFeature;
-import io.github.mohakchavan.feature.github.Mode;
+import io.github.mohakchavan.generalutils.feature.github.GithubFeature;
+import io.github.mohakchavan.generalutils.feature.github.Mode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

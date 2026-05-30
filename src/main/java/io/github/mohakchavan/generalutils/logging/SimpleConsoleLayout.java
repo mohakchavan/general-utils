@@ -1,4 +1,4 @@
-package io.github.mohakchavan.logging;
+package io.github.mohakchavan.generalutils.logging;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.CoreConstants;

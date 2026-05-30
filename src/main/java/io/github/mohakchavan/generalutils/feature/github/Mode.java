@@ -1,4 +1,4 @@
-package io.github.mohakchavan.feature.github;
+package io.github.mohakchavan.generalutils.feature.github;
 
 /**
  * This enum class provides the modes in which the {@link GithubFeature} needs to start.

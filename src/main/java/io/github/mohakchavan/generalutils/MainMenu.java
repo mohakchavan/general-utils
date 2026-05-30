@@ -1,4 +1,4 @@
-package io.github.mohakchavan;
+package io.github.mohakchavan.generalutils;
 
 /**
  * This class is used to show the user all the available features, to select from, in the console.
