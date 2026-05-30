@@ -76,4 +76,4 @@ jobs:
       - name: Clean, complie & test code
         run: |
           chmod +x mvnw
-          ./mvnw clean test --activate-profiles release,!dev
+          ./mvnw clean package --activate-profiles !dev,prod
