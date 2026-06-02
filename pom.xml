@@ -27,7 +27,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
 
-        <revision>0.0.1</revision>
+        <revision>0.0.2</revision>
         <changelist>-SNAPSHOT</changelist>
 
         <profile.suffix/> <!-- This property is intentionally kept empty. -->
